@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  isp-analyzer:
+    build: .
+    container_name: isp-analyzer
+    restart: unless-stopped
+    ports:
+      - "8501:8501"
+    volumes:
+      - /mnt/user/appdata/isp_analyzer_logs:/root/speedtest_logs
+    environment:
+      - TZ=Europe/London
+      - ALERT_THRESHOLD=800
+      - ALERT_EMAIL=
+      - WEBHOOK_URL=
