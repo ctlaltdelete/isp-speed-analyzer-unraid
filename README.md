@@ -2,23 +2,20 @@
 Streamlit-based ISP Speed Analyzer for Unraid with alerts and daily graphs.
 
 <Container>
-  <Name>ISP Speed Analyzer</Name>
+ISP Speed Analyzer
+
+Support - https://github.com/CTLALTDELETE/isp-speed-analyzer-unraid
+Project - https://github.com/CTLALTDELETE/isp-speed-analyzer-unraid
   
-  <Repository>local/isp-analyzer</Repository>
-  <Network>bridge</Network>
-  <Privileged>false</Privileged>
+Overview
+Streamlit dashboard that logs Ookla Speedtests, creates daily graphs, and sends alerts if speeds drop below a threshold.
   
-  <Support>https://github.com/CTLALTDELETE/isp-speed-analyzer-unraid</Support>
-  
-  <Project>https://github.com/CTLALTDELETE/isp-speed-analyzer-unraid</Project>
-  
-  <Overview>Streamlit dashboard that logs Ookla Speedtests, creates daily graphs, and sends alerts if speeds drop below a threshold.</Overview>
-  
-  <Category>Network:Monitoring</Category>
+Category - Network:Monitoring
+
+<img width="256" height="256" alt="isp-speed-analyzer-icon-github" src="https://github.com/user-attachments/assets/f7e18f0b-275a-4765-b211-a86729c4e357" />
+
  
-  <WebUI>http://[IP]:[PORT:8501]</WebUI>
- 
-  <Icon>https://raw.githubusercontent.com/CTLALTDELETE/isp-speed-analyzer-unraid/main/icon.png</Icon>
+WebUI - http://[IP]:[PORT:8501]
 
   <Config Name="AppData" Target="/root/speedtest_logs"
           Default="/mnt/user/appdata/isp_analyzer_logs" Mode="rw"
