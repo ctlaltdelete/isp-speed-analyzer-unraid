@@ -1,2 +1,38 @@
 # isp-speed-analyzer-unraid
 Streamlit-based ISP Speed Analyzer for Unraid with alerts and daily graphs.
+
+<Container>
+  <Name>ISP Speed Analyzer</Name>
+  
+  <Repository>local/isp-analyzer</Repository>
+  <Network>bridge</Network>
+  <Privileged>false</Privileged>
+  
+  <Support>https://github.com/CTLALTDELETE/isp-speed-analyzer-unraid</Support>
+  
+  <Project>https://github.com/CTLALTDELETE/isp-speed-analyzer-unraid</Project>
+  
+  <Overview>Streamlit dashboard that logs Ookla Speedtests, creates daily graphs, and sends alerts if speeds drop below a threshold.</Overview>
+  
+  <Category>Network:Monitoring</Category>
+ 
+  <WebUI>http://[IP]:[PORT:8501]</WebUI>
+ 
+  <Icon>https://raw.githubusercontent.com/CTLALTDELETE/isp-speed-analyzer-unraid/main/icon.png</Icon>
+
+  <Config Name="AppData" Target="/root/speedtest_logs"
+          Default="/mnt/user/appdata/isp_analyzer_logs" Mode="rw"
+          Description="Persistent logs" Type="Path"/>
+
+  <Config Name="Port 8501" Target="8501" Default="8501" Mode="tcp"
+          Description="Web UI Port" Type="Port"/>
+
+  <Config Name="Alert Threshold" Target="ALERT_THRESHOLD" Default="800" Mode="env"
+          Description="Mbps threshold" Type="Variable"/>
+
+  <Config Name="Alert Email" Target="ALERT_EMAIL" Default="" Mode="env"
+          Description="Email alert recipient" Type="Variable"/>
+
+  <Config Name="Webhook URL" Target="WEBHOOK_URL" Default="" Mode="env"
+          Description="Optional webhook" Type="Variable"/>
+</Container>
