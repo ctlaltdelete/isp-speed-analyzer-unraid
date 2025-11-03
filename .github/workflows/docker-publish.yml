@@ -9,10 +9,16 @@ jobs:
   build-and-push:
     name: Build & Push ISP Analyzer Image
     runs-on: ubuntu-latest
+
     permissions:
       contents: read
       packages: write
       id-token: write
+
+    env:
+      REGISTRY: ghcr.io
+      IMAGE_REPO: isp-analyzer
+      TAG: latest
 
     steps:
       - name: 🧩 Checkout Repository
@@ -28,14 +34,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: 🏷️ Define Image Name and Tags
+      - name: 🏷️ Compute Tags and Image Name (lowercase owner)
         id: vars
         run: |
           OWNER_LC=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-          IMAGE_NAME=ghcr.io/${OWNER_LC}/isp-analyzer
-          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
-          echo "TAG=latest" >> $GITHUB_ENV
+          echo "OWNER_LC=${OWNER_LC}" >> $GITHUB_ENV
+          echo "IMAGE_NAME=${{ env.REGISTRY }}/${OWNER_LC}/${{ env.IMAGE_REPO }}" >> $GITHUB_ENV
           echo "BUILD_TAG=build-${{ github.run_number }}" >> $GITHUB_ENV
+          echo "SHA_TAG=${GITHUB_SHA::7}" >> $GITHUB_ENV
 
       - name: 🧱 Build and Push Docker Image
         uses: docker/build-push-action@v6
@@ -45,11 +51,16 @@ jobs:
           tags: |
             ${{ env.IMAGE_NAME }}:${{ env.TAG }}
             ${{ env.IMAGE_NAME }}:${{ env.BUILD_TAG }}
+            ${{ env.IMAGE_NAME }}:${{ env.SHA_TAG }}
+          labels: |
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.created=${{ github.run_started_at }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: ✅ Confirm Push Success
+      - name: ✅ Confirm Push
         run: |
-          echo "✅ ISP Analyzer image built and pushed successfully!"
-          echo "📦 Image: ${{ env.IMAGE_NAME }}:${{ env.TAG }}"
-          echo "📦 Image: ${{ env.IMAGE_NAME }}:${{ env.BUILD_TAG }}"
+          echo "📦 Pushed: ${{ env.IMAGE_NAME }}:${{ env.TAG }}"
+          echo "📦 Pushed: ${{ env.IMAGE_NAME }}:${{ env.BUILD_TAG }}"
+          echo "📦 Pushed: ${{ env.IMAGE_NAME }}:${{ env.SHA_TAG }}"
