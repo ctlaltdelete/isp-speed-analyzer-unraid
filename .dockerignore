@@ -1,0 +1,25 @@
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore logs and test data
+*.log
+*.csv
+*.sqlite
+speedtest_results/
+streamlit_cache/
+
+# Ignore IDE and system files
+.vscode/
+.idea/
+.DS_Store
+
+# Ignore Git files
+.git/
+.gitignore
+
+# Ignore node and build artifacts (if any)
+node_modules/
+build/
+dist/
